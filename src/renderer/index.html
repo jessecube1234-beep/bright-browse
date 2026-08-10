@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bright Browse</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="toolbar">
+      <button id="home" class="icon-button" aria-label="Home">☀</button>
+      <button id="back" class="icon-button" aria-label="Go back">←</button>
+      <form id="address-form">
+        <input id="address" type="text" placeholder="Type an approved web address" autocomplete="off">
+      </form>
+      <button id="parents" class="parent-button">Parent settings</button>
+    </header>
+
+    <main id="home-screen" class="screen">
+      <section class="hero">
+        <div class="sun">☀</div>
+        <h1>Where would you like to learn today?</h1>
+        <p>Only places approved by your grown-up will open.</p>
+        <form id="topic-form" class="topic-form">
+          <input id="topic-query" type="search" placeholder="Explore a topic, like dinosaurs or fractions" autocomplete="off" aria-label="Explore a topic">
+          <button type="submit">Explore</button>
+        </form>
+        <div class="topic-suggestions" aria-label="Suggested topics">
+          <button type="button" data-topic="animals">Animals</button>
+          <button type="button" data-topic="space">Space</button>
+          <button type="button" data-topic="math">Math</button>
+          <button type="button" data-topic="reading">Reading</button>
+          <button type="button" data-topic="coding">Coding</button>
+          <button type="button" data-topic="art">Art</button>
+        </div>
+      </section>
+      <section id="topic-results" class="topic-results hidden">
+        <div class="results-heading">
+          <div><span class="eyebrow">EXPLORE</span><h2 id="topic-results-title"></h2></div>
+          <button id="clear-topic" type="button" class="secondary">Show everything</button>
+        </div>
+        <p id="topic-empty" class="hidden">No approved resources match that topic yet. Ask a grown-up to add one.</p>
+        <div id="topic-grid" class="approved-grid"></div>
+      </section>
+      <h2 id="all-resources-title" class="section-title">Approved resources</h2>
+      <section id="approved-grid" class="approved-grid"></section>
+    </main>
+
+    <main id="youtube-screen" class="youtube-screen hidden">
+      <header class="youtube-heading">
+        <div class="youtube-brand">
+          <span class="youtube-mark" aria-hidden="true">▶</span>
+          <span>YouTube</span>
+        </div>
+        <h1>Learning channels</h1>
+      </header>
+      <section id="youtube-grid" class="youtube-grid"></section>
+    </main>
+
+    <main id="message-screen" class="screen hidden">
+      <section class="message-card">
+        <div id="message-icon" class="message-icon">🛡️</div>
+        <h1 id="message-title">This page needs approval</h1>
+        <p id="message-text"></p>
+        <button id="message-home">Back to Bright Browse</button>
+      </section>
+    </main>
+
+    <dialog id="settings">
+      <form id="settings-form" method="dialog">
+        <div class="dialog-heading">
+          <div><span class="eyebrow">GROWN-UPS ONLY</span><h2>Approved content</h2></div>
+          <button id="close-settings" type="button" class="icon-button">×</button>
+        </div>
+        <p>Add one item per row. YouTube channels work best with their channel ID (starts with <code>UC</code>) or handle (starts with <code>@</code>).</p>
+        <div id="entry-list"></div>
+        <button id="add-entry" type="button" class="secondary">+ Add approved content</button>
+        <div class="dialog-actions">
+          <button id="cancel-settings" type="button" class="secondary">Cancel</button>
+          <button type="submit">Save list</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="pin-dialog" class="pin-dialog">
+      <form id="pin-form">
+        <span class="eyebrow">PARENT ACCESS</span>
+        <h2 id="pin-title">Enter parent PIN</h2>
+        <p id="pin-help">Enter your PIN to manage approved content.</p>
+        <label for="pin">PIN</label>
+        <input id="pin" class="pin-input" type="password" inputmode="numeric" pattern="[0-9]{4,6}" minlength="4" maxlength="6" autocomplete="off" required>
+        <div id="confirm-pin-group" class="hidden">
+          <label for="confirm-pin">Confirm PIN</label>
+          <input id="confirm-pin" class="pin-input" type="password" inputmode="numeric" pattern="[0-9]{4,6}" minlength="4" maxlength="6" autocomplete="off">
+        </div>
+        <p id="pin-error" class="form-error" role="alert"></p>
+        <div class="dialog-actions">
+          <button id="cancel-pin" type="button" class="secondary">Cancel</button>
+          <button id="submit-pin" type="submit">Unlock settings</button>
+        </div>
+      </form>
+    </dialog>
+
+    <template id="entry-template">
+      <div class="entry-row">
+        <select class="entry-type" aria-label="Approval type">
+          <option value="website">Website</option>
+          <option value="webpage">One webpage</option>
+          <option value="youtubeChannel">YouTube channel</option>
+        </select>
+        <input class="entry-label" placeholder="Friendly name" aria-label="Friendly name">
+        <input class="entry-value" placeholder="Domain, URL, channel ID, or @handle" aria-label="Approved value" required>
+        <button type="button" class="remove-entry" aria-label="Remove">×</button>
+      </div>
+    </template>
+    <script src="app.js"></script>
+  </body>
+</html>
