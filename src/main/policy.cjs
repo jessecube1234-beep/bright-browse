@@ -15,6 +15,20 @@ function isYoutube(url) {
   return YOUTUBE_HOSTS.has(url.hostname.toLowerCase());
 }
 
+function shouldHideYoutubeChrome(rawUrl) {
+  try {
+    const url = new URL(rawUrl);
+    if (!isYoutube(url)) return false;
+    if (url.pathname === '/' || url.pathname === '') return false;
+    const path = url.pathname.replace(/\/$/, '');
+    if (path === '/watch' && url.searchParams.has('v')) return true;
+    const parts = path.split('/').filter(Boolean);
+    return parts[0] === 'channel' || parts[0]?.startsWith('@');
+  } catch {
+    return false;
+  }
+}
+
 function youtubeChannelFromUrl(url) {
   const parts = url.pathname.split('/').filter(Boolean);
   if (parts[0] === 'channel' && parts[1]) return parts[1];
@@ -85,4 +99,4 @@ function isYoutubeChannelApproved(channelId, handle, entries = []) {
     approved.includes(String(handle || '').toLowerCase());
 }
 
-module.exports = { evaluateUrl, isYoutubeChannelApproved, normalizeHost, normalizePage };
+module.exports = { evaluateUrl, isYoutubeChannelApproved, normalizeHost, normalizePage, shouldHideYoutubeChrome };

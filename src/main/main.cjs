@@ -77,6 +77,73 @@ async function loadYoutubeForVerification(url) {
   return { allowed: false };
 }
 
+async function hideYoutubeChromeIfNeeded(url) {
+  if (!pageView || !pageView.webContents || !require('./policy.cjs').shouldHideYoutubeChrome(url)) return;
+  await pageView.webContents.insertCSS(`
+    #masthead-container,
+    #masthead,
+    #topbar,
+    #search,
+    #search-input,
+    ytd-masthead,
+    ytd-guide-renderer,
+    ytd-mini-guide-renderer,
+    #guide,
+    #chips,
+    #related,
+    #secondary,
+    ytd-watch-next-secondary-results-renderer,
+    ytd-comments,
+    ytd-reel-shelf-renderer,
+    ytd-searchbox {
+      display: none !important;
+    }
+    #page-manager,
+    #content,
+    #primary,
+    #contents,
+    ytd-browse-results-renderer,
+    ytd-channel-renderer,
+    ytd-video-renderer,
+    ytd-watch-flexy {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+    }
+    html, body {
+      overflow: auto !important;
+    }
+  `);
+
+  await pageView.webContents.executeJavaScript(`(() => {
+    const selectors = [
+      '#masthead-container', '#masthead', '#topbar', '#search', '#search-input',
+      'ytd-masthead', 'ytd-guide-renderer', 'ytd-mini-guide-renderer', '#guide',
+      '#chips', '#related', '#secondary', 'ytd-watch-next-secondary-results-renderer',
+      'ytd-comments', 'ytd-reel-shelf-renderer', 'ytd-searchbox'
+    ];
+    for (const selector of selectors) {
+      document.querySelectorAll(selector).forEach((element) => {
+        element.style.display = 'none';
+      });
+    }
+    const contentTargets = [
+      document.querySelector('#primary'),
+      document.querySelector('#contents'),
+      document.querySelector('ytd-watch-flexy'),
+      document.querySelector('ytd-channel-renderer'),
+      document.querySelector('ytd-browse-results-renderer')
+    ].filter(Boolean);
+    for (const target of contentTargets) {
+      target.style.width = '100%';
+      target.style.maxWidth = '100%';
+      target.style.minWidth = '0';
+    }
+    if (document.body) document.body.style.overflow = 'auto';
+    if (document.documentElement) document.documentElement.style.overflow = 'auto';
+  })();`).catch(() => {});
+}
+
 async function navigate(rawUrl) {
   let url = String(rawUrl || '').trim();
   if (!/^https?:\/\//i.test(url)) url = `https://${url}`;
@@ -94,6 +161,7 @@ async function navigate(rawUrl) {
   }
   if (decision.action === 'verify-youtube') return loadYoutubeForVerification(url);
   await pageView.webContents.loadURL(url);
+  await hideYoutubeChromeIfNeeded(url);
   pageView.setVisible(true);
   sendStatus({ state: 'browsing', url });
   return { allowed: true };
@@ -129,6 +197,12 @@ function createWindow() {
     if (decision.action !== 'allow') {
       event.preventDefault();
       navigate(url).catch(() => showBlocked(url, 'Bright Browse could not follow this redirect.'));
+    }
+  });
+  pageView.webContents.on('did-finish-load', () => {
+    const currentUrl = pageView?.webContents?.getURL();
+    if (currentUrl && require('./policy.cjs').shouldHideYoutubeChrome(currentUrl)) {
+      hideYoutubeChromeIfNeeded(currentUrl).catch(() => {});
     }
   });
   pageView.webContents.setWindowOpenHandler(({ url }) => {

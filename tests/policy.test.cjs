@@ -1,6 +1,6 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { evaluateUrl, isYoutubeChannelApproved } = require('../src/main/policy.cjs');
+const { evaluateUrl, isYoutubeChannelApproved, shouldHideYoutubeChrome } = require('../src/main/policy.cjs');
 
 const entries = [
   { type: 'website', value: 'khanacademy.org' },
@@ -36,4 +36,11 @@ test('the general YouTube homepage routes to the safe Bright Browse home', () =>
   assert.equal(evaluateUrl('https://youtube.com', entries).action, 'safe-youtube-home');
   assert.equal(evaluateUrl('https://www.youtube.com/', entries).action, 'safe-youtube-home');
   assert.equal(evaluateUrl('https://youtube.com/results?search_query=science', entries).action, 'block');
+});
+
+test('YouTube channels and videos hide the extra site chrome but keep the main content', () => {
+  assert.equal(shouldHideYoutubeChrome('https://www.youtube.com/@goodchannel'), true);
+  assert.equal(shouldHideYoutubeChrome('https://www.youtube.com/watch?v=abc'), true);
+  assert.equal(shouldHideYoutubeChrome('https://www.youtube.com/results?search_query=science'), false);
+  assert.equal(shouldHideYoutubeChrome('https://youtube.com'), false);
 });

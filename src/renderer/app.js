@@ -2,6 +2,7 @@ const $ = (selector) => document.querySelector(selector);
 const homeScreen = $('#home-screen');
 const youtubeScreen = $('#youtube-screen');
 const messageScreen = $('#message-screen');
+const floatingHome = $('#floating-home');
 const settings = $('#settings');
 const pinDialog = $('#pin-dialog');
 let policy = { entries: [] };
@@ -153,6 +154,7 @@ document.querySelectorAll('[data-topic]').forEach((button) => {
 });
 $('#clear-topic').addEventListener('click', clearTopicSearch);
 $('#home').addEventListener('click', () => window.brightBrowse.home());
+floatingHome.addEventListener('click', () => window.brightBrowse.home());
 $('#back').addEventListener('click', () => window.brightBrowse.back());
 $('#parents').addEventListener('click', requestParentAccess);
 $('#cancel-pin').addEventListener('click', () => pinDialog.close());
@@ -200,10 +202,28 @@ $('#settings-form').addEventListener('submit', async (event) => {
 });
 
 window.brightBrowse.onStatus((status) => {
-  if (status.state === 'home') showHome();
-  if (status.state === 'youtube-home') showYoutubeHome();
-  if (status.state === 'blocked') showMessage('This page needs approval', status.reason);
-  if (status.state === 'checking') showMessage('Checking this video…', 'Bright Browse is making sure it comes from an approved channel.', '🔎');
+  if (status.state === 'home') {
+    showHome();
+    floatingHome.classList.add('hidden');
+  }
+  if (status.state === 'youtube-home') {
+    showYoutubeHome();
+    floatingHome.classList.add('hidden');
+  }
+  if (status.state === 'browsing') {
+    homeScreen.classList.add('hidden');
+    youtubeScreen.classList.add('hidden');
+    messageScreen.classList.add('hidden');
+    floatingHome.classList.remove('hidden');
+  }
+  if (status.state === 'blocked') {
+    showMessage('This page needs approval', status.reason);
+    floatingHome.classList.add('hidden');
+  }
+  if (status.state === 'checking') {
+    showMessage('Checking this video…', 'Bright Browse is making sure it comes from an approved channel.', '🔎');
+    floatingHome.classList.add('hidden');
+  }
 });
 
 window.brightBrowse.getPolicy().then((savedPolicy) => {
