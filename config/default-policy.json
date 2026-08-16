@@ -1,0 +1,113 @@
+{
+  "defaultsVersion": 2,
+  "entries": [
+    {
+      "type": "website",
+      "value": "khanacademy.org",
+      "label": "Khan Academy",
+      "topics": ["math", "fractions", "algebra", "geometry", "science", "economics", "history", "computing", "test prep"]
+    },
+    {
+      "type": "website",
+      "value": "kids.nationalgeographic.com",
+      "label": "National Geographic Kids",
+      "topics": ["animals", "dinosaurs", "nature", "geography", "science", "space", "history"]
+    },
+    {
+      "type": "website",
+      "value": "pbskids.org",
+      "label": "PBS Kids",
+      "topics": ["reading", "math", "science", "games", "creativity", "social skills"]
+    },
+    {
+      "type": "website",
+      "value": "scratch.mit.edu",
+      "label": "Scratch Coding",
+      "topics": ["coding", "programming", "games", "animation", "creativity", "computers"]
+    },
+    {
+      "type": "website",
+      "value": "code.org",
+      "label": "Code.org",
+      "topics": ["coding", "programming", "computer science", "games", "technology"]
+    },
+    {
+      "type": "website",
+      "value": "kids.britannica.com",
+      "label": "Britannica Kids",
+      "topics": ["encyclopedia", "homework", "history", "science", "geography", "biography", "animals"]
+    },
+    {
+      "type": "website",
+      "value": "storylineonline.net",
+      "label": "Storyline Online",
+      "topics": ["reading", "books", "stories", "literacy", "language arts"]
+    },
+    {
+      "type": "website",
+      "value": "spaceplace.nasa.gov",
+      "label": "NASA Space Place",
+      "topics": ["space", "planets", "astronomy", "earth", "sun", "moon", "science"]
+    },
+    {
+      "type": "youtubeChannel",
+      "value": "@crashcoursekids",
+      "label": "Crash Course Kids",
+      "topics": ["science", "engineering", "earth", "space", "life science"]
+    },
+    {
+      "type": "youtubeChannel",
+      "value": "@SciShowKids",
+      "label": "SciShow Kids",
+      "topics": ["science", "experiments", "animals", "biology", "chemistry", "physics"]
+    },
+    {
+      "type": "youtubeChannel",
+      "value": "@NatGeoKids",
+      "label": "National Geographic Kids",
+      "topics": ["animals", "nature", "dinosaurs", "geography", "science"]
+    },
+    {
+      "type": "youtubeChannel",
+      "value": "@ArtforKidsHub",
+      "label": "Art for Kids Hub",
+      "topics": ["art", "drawing", "painting", "crafts", "creativity"]
+    },
+    {
+      "type": "youtubeChannel",
+      "value": "@khanacademy",
+      "label": "Khan Academy",
+      "topics": ["math", "science", "economics", "history", "computing"]
+    },
+    {
+      "type": "youtubeChannel",
+      "value": "@TEDEd",
+      "label": "TED-Ed",
+      "topics": ["science", "history", "literature", "philosophy", "critical thinking"]
+    },
+    {
+      "type": "youtubeChannel",
+      "value": "@Numberblocks",
+      "label": "Numberblocks",
+      "topics": ["math", "numbers", "counting", "addition", "early learning"]
+    },
+    {
+      "type": "youtubeChannel",
+      "value": "@HomeschoolPop",
+      "label": "Homeschool Pop",
+      "topics": ["history", "science", "geography", "social studies", "elementary"]
+    },
+    {
+      "type": "youtubeChannel",
+      "value": "@PBSKIDS",
+      "label": "PBS Kids",
+      "topics": ["reading", "math", "science", "creativity", "early learning"]
+    },
+    {
+      "type": "youtubeChannel",
+      "value": "@SesameStreet",
+      "label": "Sesame Street",
+      "topics": ["letters", "numbers", "reading", "feelings", "early learning"]
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "name": "bright-browse",
+  "productName": "Bright Browse",
+  "version": "0.1.0",
+  "description": "An allowlist-first browser for children",
+  "author": "Bright Browse",
+  "main": "src/main/main.cjs",
+  "scripts": {
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "test": "node tests/policy.test.cjs && node tests/pin-store.test.cjs && node tests/policy-store.test.cjs"
+  },
+  "dependencies": {
+    "electron-squirrel-startup": "latest"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "latest",
+    "@electron-forge/maker-squirrel": "latest",
+    "electron": "latest",
+    "png-to-ico": "latest"
+  }
+}
